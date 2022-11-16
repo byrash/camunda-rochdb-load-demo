@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0thzbn3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.5.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.18.0">
+  <bpmn:process id="Process_0k1g530" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_0br1hy1</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0br1hy1" sourceRef="StartEvent_1" targetRef="Activity_0ykon4k" />
+    <bpmn:serviceTask id="Activity_0ykon4k" name="Get All Process Instance Count" camunda:asyncBefore="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+                <camunda:entry key="Authorization ">Basic</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/engine-rest/process-instance/count</camunda:inputParameter>
+            <camunda:outputParameter name="Response">
+              <camunda:script scriptFormat="JavaScript">var resp = connector.getVariable('Response');
+var definitionsArray = JSON.parse(resp);</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0br1hy1</bpmn:incoming>
+      <bpmn:outgoing>Flow_1yfdceg</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_08a6jjd" name="Get All Engine Names" camunda:asyncBefore="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+                <camunda:entry key="Authorization ">Basic</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/engine-rest/engine</camunda:inputParameter>
+            <camunda:outputParameter name="Response">
+              <camunda:script scriptFormat="JavaScript">var resp = connector.getVariable('Response');
+var definitionsArray = JSON.parse(resp);</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1yfdceg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1xjrp4m</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1yfdceg" sourceRef="Activity_0ykon4k" targetRef="Activity_08a6jjd" />
+    <bpmn:serviceTask id="Activity_0n4mtmh" name="Get Engine Version" camunda:asyncBefore="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+                <camunda:entry key="Authorization ">Basic</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/engine-rest/version</camunda:inputParameter>
+            <camunda:outputParameter name="Response">
+              <camunda:script scriptFormat="JavaScript">var resp = connector.getVariable('Response');
+var definitionsArray = JSON.parse(resp);</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1xjrp4m</bpmn:incoming>
+      <bpmn:outgoing>Flow_1s3otll</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1xjrp4m" sourceRef="Activity_08a6jjd" targetRef="Activity_0n4mtmh" />
+    <bpmn:sequenceFlow id="Flow_1s3otll" sourceRef="Activity_0n4mtmh" targetRef="Activity_1bapyll" />
+    <bpmn:userTask id="Activity_1bapyll" name="Validate Response User Task">
+      <bpmn:incoming>Flow_1s3otll</bpmn:incoming>
+      <bpmn:outgoing>Flow_103ev5d</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_105rek6" name="Get All Process Definitions" camunda:asyncBefore="true">
+      <bpmn:extensionElements>
+        <camunda:connector>
+          <camunda:inputOutput>
+            <camunda:inputParameter name="headers">
+              <camunda:map>
+                <camunda:entry key="Accept">application/json</camunda:entry>
+                <camunda:entry key="Authorization ">Basic</camunda:entry>
+              </camunda:map>
+            </camunda:inputParameter>
+            <camunda:inputParameter name="method">GET</camunda:inputParameter>
+            <camunda:inputParameter name="url">http://localhost:8080/engine-rest/process-definition</camunda:inputParameter>
+            <camunda:outputParameter name="Response">
+              <camunda:script scriptFormat="JavaScript">var resp = connector.getVariable('Response');
+var definitionsArray = JSON.parse(resp);</camunda:script>
+            </camunda:outputParameter>
+          </camunda:inputOutput>
+          <camunda:connectorId>http-connector</camunda:connectorId>
+        </camunda:connector>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_103ev5d</bpmn:incoming>
+      <bpmn:outgoing>Flow_0570c0v</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_103ev5d" sourceRef="Activity_1bapyll" targetRef="Activity_105rek6" />
+    <bpmn:endEvent id="Event_1spt8hx" name="End">
+      <bpmn:incoming>Flow_0570c0v</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0570c0v" sourceRef="Activity_105rek6" targetRef="Event_1spt8hx" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0k1g530">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="185" y="142" width="24" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1ux1c9h_di" bpmnElement="Activity_0ykon4k">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_1eg2ebu" bpmnElement="Activity_08a6jjd">
+        <dc:Bounds x="450" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_14gz5fs" bpmnElement="Activity_0n4mtmh">
+        <dc:Bounds x="630" y="77" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0nxjyca_di" bpmnElement="Activity_1bapyll">
+        <dc:Bounds x="810" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_09x2cdm" bpmnElement="Activity_105rek6">
+        <dc:Bounds x="810" y="250" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1spt8hx_di" bpmnElement="Event_1spt8hx">
+        <dc:Bounds x="962" y="272" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="970" y="315" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0br1hy1_di" bpmnElement="Flow_0br1hy1">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1yfdceg_di" bpmnElement="Flow_1yfdceg">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="450" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1xjrp4m_di" bpmnElement="Flow_1xjrp4m">
+        <di:waypoint x="550" y="117" />
+        <di:waypoint x="630" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1s3otll_di" bpmnElement="Flow_1s3otll">
+        <di:waypoint x="730" y="117" />
+        <di:waypoint x="810" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_103ev5d_di" bpmnElement="Flow_103ev5d">
+        <di:waypoint x="860" y="157" />
+        <di:waypoint x="860" y="250" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0570c0v_di" bpmnElement="Flow_0570c0v">
+        <di:waypoint x="910" y="290" />
+        <di:waypoint x="962" y="290" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
