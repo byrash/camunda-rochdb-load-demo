@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+    app1:
+        container_name: app1
+        hostname: app1
+        image: camunda/camunda-bpm-platform
+        expose:
+            - '8080'
+        environment:
+            - DB_DRIVER=org.postgresql.Driver
+            - DB_URL=jdbc:postgresql://host.docker.internal:9292/defaultdb
+            - DB_USERNAME=root
+            - DB_PASSWORD=welcome123
+        networks:
+            - appnet
+    app_lb:
+        container_name: app_lb
+        hostname: app_lb
+        image: envoyproxy/envoy-dev:e0cc4306253f0318f9dcbc77cf32feb6245c378f
+        ports:
+            - '9191:9191'
+        volumes:
+            - ./envoy-app.yaml:/etc/envoy/envoy.yaml
+        networks:
+            - appnet
+networks:
+    appnet:
